@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>onepage scroll</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            border: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: '나눔손글씨 옥비체', sans-serif;
+        }
+
+        .wrap {
+            position: relative;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: 0.5s  ease-in-out;
+        }
+
+        /* 속도랑 드래그 양 조절 */
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+
+
+        /* 컨테이너 */
+
+        .container:nth-child(1) {
+            background-image: url('배경.webp');
+            background-size: 100% 100%;
+        }
+
+        .container:nth-child(3) {
+            background-color: rgb(235, 232, 226);
+        }
+
+        .container:nth-child(4) {
+            background-image: url('paper17.png');
+            background-size: 100% 100%;
+        }
+
+        .container:nth-child(5) {
+            background-image: url('paper10.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+        }
+
+        .container:nth-child(6) {
+            background-image: url('paper5.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+        }
+
+
+        /* 텍스트 애니메이션을 위한 스타일 */
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+
+
+        /* 애니메이션 효과를 적용할 요소에 대한 스타일 */
+        .animate-title {
+            animation: slideIn 2s ease forwards;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            transform: translate(-50%, -50%);
+            left: 30%;
+            top: 35%;
+            width: 70%;
+            height: 55%;
+            border-radius: 10px;
+            background-image: url('paper.jpg');
+            line-height: 1.5;
+        }
+
+        /* 큰 텍스트 스타일 */
+        .big-text {
+            font-size: 9vw;
+            color: rgb(55, 73, 107);
+        }
+
+        /* 작은 텍스트 스타일 */
+        .small-text {
+            font-size: 4vw;
+            color: #221f1f;
+        }
+
+
+        /* 줄 스타일 */
+        .divider {
+            width: 10vw;
+            height: 2px;
+            background-color: #221f1f;
+            margin: 0 auto 10px;
+            /* 하단 마진을 추가하여 아래로 이동 */
+        }
+
+        /* 학번 */
+        .name-text {
+            font-size: 2vw;
+            color: #221f1f;
+        }
+
+
+        /* 2페이지 왼 좌 나누기 */
+
+        #screen_left {
+            width: 50%;
+            height: 100%;
+            float: left;
+            background-image: url('paper18.jpg');
+            background-size: 50% 100%;
+        }
+
+        #screen_right {
+            width: 50%;
+            height: 100%;
+            background-image: url('paper.jpg');
+            float: right;
+        }
+
+        /* 왼쪽 네모 */
+        .square {
+            width: 75%;
+            height: 90%;
+            background-color: white;
+            text-align: center;
+            position: relative;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 45%;
+            border-radius: 20%;
+        }
+
+
+        /* 2페이지 반갈죽 */
+        .vertical-dotted-line {
+            border-left: 10px solid rgb(75, 97, 139);
+            /* 점선 스타일 적용 */
+            height: 100%;
+            /* 세로 길이 설정 */
+            position: absolute;
+            /* 다른 내용과 겹치지 않도록 절대 위치 지정 */
+            left: 50%;
+            /* 가운데 정렬 */
+            top: 10;
+            /* 위에서부터 시작 */
+            border-left-width: 15px;
+        }
+
+        /* 3페이지 네모 */
+        .square1 {
+            width: 75%;
+            height: 75%;
+            text-align: center;
+            position: relative;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 15%;
+            margin: 0;
+        }
+
+        /* 3페이지 동그라미 */
+        #circle {
+            width: 8vw;
+            height: 8vw;
+            border-radius: 50%;
+            text-align: center;
+            position: relative;
+            font-size: 1.5vw;
+            color: rgb(44, 34, 21);
+            transform: translate(-50%, -50%);
+            line-height: 8.5vw;
+            box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);
+            font-weight: bold;
+        }
+
+
+        /* 4,5페이지 박스 */
+        .bigbox1 {
+            width: 90%;
+            height: 90%;
+            position: relative;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+            border: 0.5vw solid rgb(0, 0, 0);
+            float: left;
+            list-style: none;
+            display: flex;
+            margin: 0px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text {
+            flex: 1;
+            text-align: center;
+        }
+
+
+        .container2-1 {
+            font-size: 1.3vw;
+        }
+
+        /* 5, 6페이지*/
+        hr{
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            transform: translate(-50%, -50%);
+        }
+
+        .image-row {
+            display: flex;
+            justify-content: space-between; /* 공간을 균등하게 분배 */
+            gap: 0.5vw;
+            padding: 0 10vw;
+        }
+        .image-row img {
+            width: 20%;
+            height: 20%;
+        }
+
+        ol {
+            list-style-type: none; /* 목록 기호 제거 */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* 오버플로우 처리 */
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            transform: translate(-50%, -50%);
+        }
+
+        ol li {
+            float: left; /* 왼쪽으로 정렬 */
+            display: block; /* 링크를 블록 레벨로 변경 */
+            color: rgb(75, 97, 139); /* 글자색 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            padding: 0vw 8vw; /* 패딩 */
+            text-decoration: none; /* 밑줄 제거 */
+            font-size: 2.5vw;
+        }
+
+        /* 정리 */
+        h1 {
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            transform: translate(-50%, -50%);
+        }
+
+        h2 {
+            position: relative;
+            transform: translate(-50%, -50%);
+        }
+
+        ul {
+            display: flex;
+            /* 리스트를 가로로 배치 */
+            flex-wrap: wrap;
+            /* 너비가 넘칠 경우 자동으로 다음 줄에 배치 */
+            padding: 0;
+            /* 리스트의 패딩 제거 */
+            list-style: none;
+            /* 기본 목록 마커 제거 */
+        }
+
+        ul li {
+            width: 50%;
+            /* 리스트 항목의 너비를 50%로 설정하여 2개씩 옆으로 배열 */
+            box-sizing: border-box;
+            /* 패딩 값이 요소의 크기에 포함되도록 설정 */
+            padding: 0.5vw;
+            /* 각 항목의 안쪽 여백 설정 */
+            margin-bottom: 0.5vw;
+        }
+
+
+        /* 마지막 페이지 제목 */
+        h3 {
+            font-size: 5vw;
+            display: flex;
+            justify-content: center;
+            /* 가로 중앙 정렬 */
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="wrap">
+
+        <!-- 1번 컨테이너-->
+        <div class="container">
+            <!-- 애니메이션을 적용할 텍스트 -->
+            <div class="animate-title">
+                <div class="big-text" style="margin: 0px;">성남시</div>
+                <div class="small-text">첨단과 혁신의 희망도시</div>
+                <div class="divider"></div>
+                <div class="name-text">202434659 임현지 . 202434589 권희경</div>
+            </div>
+        </div>
+
+
+        <!-- 2번 컨테이너 -->
+        <div class="container">
+            <div id="screen_left">
+                <div class="empty square">
+                    <div class="square">
+                        <h1 style="font-size: 5vw; color: rgb(75, 97, 139); left: 50%; top: 10%;">성남의 노래</h1>
+                        <video width="80%" height="40%" controls
+                            style="position: relative; left: 40%; top: 20%; transform: translate(-50%, -50%);">
+                            <source src="동영상1.mp4" type="video/mp4">
+                        </video>
+                        <h2 style="border: 0.4vw dashed rgb(75, 97, 139); padding: 10px; border-radius: 5px; left: 50%; font-size: 0.9vw;
+                           top: 20%; background-image: url('paper.jpg');  width:80%; height:25%;">
+                            1974년 성남시민을 위하여 성남시에서 제정한 노래.
+                            <p>성남시민의 노래는 1974년 6월 전 시민을 대상으로 현상 공모하였다.
+                            <p>이때 들어온 작품들을 엄정하게 심사하여 당시 성남초등학교 교사이던 이재범(李載範)의 작품을 당선작으로 채택하였다.
+                            <p>이에 이재범의 출품한 가사에 김학송(金學松)이 작곡하여 성남시민의 노래가 완성되었다.
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-dotted-line"></div>
+            <div id="screen_right">
+                <h1 style="font-size: 5vw; color: rgb(68, 55, 39); left: 50%; top: 5%;">가사</h1>
+                <h2 style="left: 80%; top: 30%;">
+                    <div class="container2-1">
+                        ♪ 1절
+
+                        <p>남한산의 푸른 정기 담뿍이 안고 새 일꾼 기다리던 복 밭은 땅에
+                        <p>내일 위해 형제들이 땀을 흘리니 천년만년 이어나갈 생활의 터전
+
+                        <p><br>♪ 2절
+
+                        <p>굳센 의지 한결같이 고난을 참고 힘차게 뻗어나간 동맥을 따라
+                        <p>달려가는 일터마다 보람찬 나날 자손만대 누려나갈 행복을 심자
+
+                        <p><br>♪ 3절
+
+                        <p>끓는 피와 솟는 힘을 뉘에 바치랴 서로 돕는 인정 속에 웃음 꽃 피며
+                        <p>새 터전에 새마을을 알뜰히 가꿔 번영을 노래하며 잘 살아 보세
+
+                        <p><br>♪ 후렴
+
+                        <p>슬기와 노력으로 이룩한 성남 우리들은 성남 시민 성남에 살자
+                </h2>
+            </div>
+        </div>
+
+        <!-- 3번 컨테이너 -->
+        <div class="container">
+            <div id="circle" style="background-color:#FBC2EB; left: 6%; top: 81%;">#FBC2EB</div>
+            <div id="circle" style="background-color: #BCECFF; left: 94%; top: 1%;;">#BCECFF</div>
+            <div class="square1" style="border-radius: 5%;
+            background: linear-gradient(to bottom left, #B3EBFF, #FBC2EB);
+            box-shadow: 1vw 1vw 1vw rgba(0, 0, 0, 0.6);">
+                <h2 style="border: 0.5vw dashed rgb(255, 255, 255); margin: 0px; padding: 10px; font-size: 1vw; border-radius: 5px; left: 50%;
+           top: 25%; width: 80%; height: 20%; ">
+                    <img src="로고.svg" style="width: 15%; height: 100%; float: left;">
+                    <ul style="transform: translateY(-1.7vw);">
+                        <li>♪ 다섯개의 철쭉꽃잎 : 경제, 사회, 문화, 교육, 복지가 조화롭게 발전함을 의미</li>
+                        <li>♪ 성곽(철쭉꽃 속) : 남한산성을 표현한것으로 역사의 전통성을 슬기롭게 계승하고 희망찬 미래를 가꾸어 가는 성남시의 숭고 한 정신을 의미</li>
+                        <li>♪ 기둥(타원속) : 현대도시로 발전하는 성남시, 역동적으로 웅비 하는 성남시를 상징</li>
+                        <li>♪ 적색 : 진취적으로 발전하는 활기찬 성남시</li>
+                        <li>♪ 황색 : 역사의 전통성을 계승 발전시키는 친근한 성남시</li>
+                        <li>♪ 청색 : 맑고 푸른 환경 속에서 살아가는 쾌적한 성남시</li>
+                    </ul>
+                </h2>
+
+                <h2 style="margin: 0px;  padding: 10px; font-size: 1vw;
+                       border-radius: 5px; left: 50%; top: 25%; width:80%; height:20%; background-position: 40% 80%;">
+                    <img src="마스코트1.png" style="width: 15%; height: 100%; float: right;  margin-bottom: 25px;">
+                    <ul style="transform: translateY(-1.7vw);">
+                        <li>♪ 마스코트 새남이 · 새롱이</li>
+                        <li>♪ 남녀 한 쌍으로 이루어진 성남시의 지도형상인 타원이미지와 미래 첨단공간이라는 이미지, 남한산성의 역사적인 이미지를 모티브로
+                            미래와 자연, 과학과 전통 환경과 행복을 표현</li>
+                        <li>♪ 새남이(좌) : 발전하는 마천루의 형상 적용</li>
+                        <li>♪ 새롱이(우) : 성남시 발전의 젖줄인 탄천을 모티브로 적용</li>
+                    </ul>
+                </h2>
+                <h2 style="border: 0.5vw dashed rgb(255, 255, 255); margin: 0px; padding: 10px; border-radius: 5px;
+                       left: 50%; top: 25%;  width:80%; height:20%; font-size: 2vw;" >
+                    <img src="까치.png" style="width: 15%; height: 100%; float: left;  margin-bottom: 25px;">
+                    <ul style="transform: translateY(-2vw);">
+                        <li>♪ 시목: 은행나무</li>
+                        <p></p>
+                        <li>♪ 시화: 철쭉</li>
+                        <p></p>
+                        <li>♪ 시조: 까치</li>
+                    </ul>
+                </h2>
+            </div>
+        </div>
+
+
+        <!-- 4번 컨테이너 -->
+        <div class="container" style="margin:0; color:#4d828f">
+            <div class="square1" style=" top: 50%; width:80%; height:80%;">
+                <h2 style="margin: 0px; padding: 10px; left: 50%; font-size: 4vw; top: 25%; width: 90%; height: 40%; ">
+                    <a href="https://www.seongnam.go.kr/main.do" target="_blank">
+                        <img src="시청.jpg"
+                            style="width: 20%; height: 100%; float: left;  border-radius: 1.5vw; box-shadow: 0.5vw 0.5vw 0.7vw rgba(0, 0, 0, 0.6);"></a>
+                    <a href="https://www.jungwongu.go.kr:10008/main/index.asp" target="_blank">
+                        <img src="중원.jpg"
+                            style="width: 20%; height: 100%; float: right; border-radius: 1.5vw; box-shadow: 0.5vw 0.5vw 0.7vw rgba(0, 0, 0, 0.6);"></a>
+                    <ul style="transform: translateY(5vw); float:right">중원 구청&nbsp;&nbsp;
+                    </ul>
+
+                    <ul style="transform: translateY(-3.5vw);">&nbsp;&nbsp;성남 시청
+                    </ul>
+                </h2>
+
+                <h2 style="margin: 0px; padding: 10px; font-size: 4vw; left: 50%; top: 30%;  width:90%; height:40%;">
+                    <a href="https://www.sujeong-gu.go.kr/mobile/main/index.asp" target="_blank">
+                        <img src="수정.jpg"
+                            style="width: 20%; height: 100%; float: left;   border-radius: 1.5vw; box-shadow: 0.5vw 0.5vw 0.7vw rgba(0, 0, 0, 0.6);"></a>
+                    <a href="https://www.bundang-gu.go.kr:10009/main/index.asp" target="_blank">
+                        <img src="분당.jpg"
+                            style="width: 20%; height: 100%; float:right; border-radius: 1.5vw; box-shadow: 0.5vw 0.5vw 0.7vw rgba(0, 0, 0, 0.6);"></a>
+                    <ul style="transform: translateY(-3.5vw);">&nbsp;&nbsp;수정 구청
+                    </ul>
+                    <ul style="transform: translateY(-5.5vw); float:right">분당 구청&nbsp;&nbsp;
+                    </ul>
+                </h2>
+            </div>
+        </div>
+
+    <!-- 5번 컨테이너 -->
+    <div class="container">
+        <h1 h1 style="font-size: 5vw; margin: 0px; color: rgb(75, 97, 139); left: 30%; top: 13%;">성남의 장소들
+        <hr style="width: 23vw; border: 0.1vw solid  rgb(75, 97, 139); transform: translateY(-2.0vw);"></h1>
+        <div class="image-row" style="transform: translateY(2vw); ">
+            <img src="남한산성.jpg" id="남한산성" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+            <img src="모란시장.jpg" id="모란시장" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+            <img src="성남아트센터.jpg" id="성남아트센터" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+            <img src="판교테크노벨리.jpg" id="성남테크노밸리" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+        </div>
+        <hr style="width: 80vw; border: 0.1vw solid  rgb(75, 97, 139); top:12%; left: 40%;">
+        <ol style="top:18%; left: 63%;">
+            <a href="https://www.accuweather.com/ko/kr/seongnam/223672/weather-forecast/223672" target="_blank">
+            <li>Weather</li></a>
+            <a href="https://www.youtube.com/@sndiary" target="_blank">
+            <li>YouTube</li></a>
+            <a href="https://www.instagram.com/seongnamsi/" target="_blank">
+            <li>Instagram</li></a>
+        </ol>
+    </div>
+    
+    <!-- 6번 컨테이너 -->
+    <div class="container">
+        <h1 h1 style="font-size: 4vw; margin: 0px; color: rgb(75, 97, 139); left: 30%; top: 13%;">Places in Seongnam
+            <hr style="width: 23vw; border: 0.1vw solid  rgb(75, 97, 139); transform: translateY(-1vw);"></h1>
+            <div class="image-row" style="transform: translateY(4vw);">
+                <img src="율동공원.jpg" id="율동공원" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+                <img src="중앙공원.jpg" id="중앙공원" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+                <img src="황송공원.jpg" id="황송공원" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+                <img src="청계산.jpg" id="청계산" style="box-shadow: 1vw 1vw 1.4vw rgba(0, 0, 0, 0.6);">
+            </div>
+            <hr style="width: 80vw; border: 0.1vw solid  rgb(75, 97, 139); top:17%; left: 40%; ">
+            <ol style="top:23%; left: 68%; font-size: 6vw;">
+                <a href="https://www.google.com/maps/place/%EA%B2%BD%EA%B8%B0%EB%8F%84+%EC%84%B1%EB%82%A8%EC%8B%9C/data=!3m1!4b1!4m6!3m5!1s0x357ca7f1701220bf:0x50315666bce397d4!8m2!3d37.4073695!4d127.1162181!16zL20vMDN2NnN0?entry=ttu" target="_blank">
+                <li>Map</li></a>
+                <a href="https://www.gachon.ac.kr/kor/index.do" target="_blank">
+                <li>Gachon</li></a>
+                <a href="https://www.seongnam.go.kr/city/1000015/10011/contents.do" target="_blank">
+                <li>History</li></a>
+            </ol>
+    </div>
+    </div>
+
+    <script>
+        document.getElementById("남한산성").onclick = function() {
+            window.open("https://www.seongnam.go.kr/tour/1002026/11338/contents.do", "_blank"); 
+        };
+    </script>
+    
+    <script>
+        document.getElementById("모란시장").onclick = function() {
+            window.open("https://www.seongnam.go.kr/tour/1002051/11357/contents.do", "_blank"); 
+        };
+    </script>
+
+<script>
+    document.getElementById("성남아트센터").onclick = function() {
+        window.open("https://www.snart.or.kr/main/main", "_blank"); 
+    };
+</script>
+
+<script>
+    document.getElementById("성남테크노밸리").onclick = function() {
+        window.open("https://www.pangyotechnovalley.org/base/main/view", "_blank"); 
+    };
+</script>
+
+<script>
+    document.getElementById("율동공원").onclick = function() {
+        window.open("http://www.ydpark.co.kr/", "_blank"); 
+    };
+</script>
+
+<script>
+    document.getElementById("중앙공원").onclick = function() {
+        window.open("https://www.seongnam.go.kr/tour/1002009/11329/contents.do", "_blank"); 
+    };
+</script>
+
+<script>
+    document.getElementById("황송공원").onclick = function() {
+        window.open("https://www.grandculture.net/seongnam/toc/GC00102354", "_blank"); 
+    };
+</script>
+
+<script>
+    document.getElementById("청계산").onclick = function() {
+        window.open("https://www.seongnam.go.kr/tour/1002003/11324/contents.do?fbrefresh=CAN_BE_ANYTHING&&fbrefresh=CAN_BE_ANYTHING", "_blank"); 
+    };
+</script>
+
+
+
+<script>
+    const wrap = document.querySelector('.wrap');
+    const containers = document.querySelectorAll('.container');
+    let page = 0;
+    const lastPage = containers.length - 1;
+    let isScrolling = false;
+
+    window.addEventListener('wheel', (e) => {
+        if (isScrolling) return; // 이미 스크롤 중이면 무시
+        isScrolling = true;
+
+        e.preventDefault();
+        if (e.deltaY > 0) {
+            // 휠을 내렸을 때
+            if (page < lastPage) {
+                page++;
+            }
+        } else {
+            // 휠을 올렸을 때
+            if (page > 0) {
+                page--;
+            }
+        }
+
+        wrap.style.top = page * -100 + 'vh';
+
+        setTimeout(() => {
+            isScrolling = false;
+        }, 500); // 스크롤 완료 후 0.5초 동안 추가 스크롤 방지
+    }, { passive: false });
+
+    let isDragging = false;
+    let startY, initialY;
+
+    wrap.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startY = e.clientY;
+        initialY = wrap.offsetTop;
+        wrap.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const moveY = e.clientY - startY;
+            wrap.style.top = initialY + moveY + 'px';
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            wrap.style.cursor = 'grab';
+            const movedPages = Math.round((wrap.offsetTop / window.innerHeight) * -1);
+            page = Math.max(0, Math.min(lastPage, movedPages));
+            wrap.style.top = page * -100 + 'vh';
+        }
+    });
+
+    document.addEventListener('mouseleave', () => {
+        if (isDragging) {
+            isDragging = false;
+            wrap.style.cursor = 'grab';
+            const movedPages = Math.round((wrap.offsetTop / window.innerHeight) * -1);
+            page = Math.max(0, Math.min(lastPage, movedPages));
+            wrap.style.top = page * -100 + 'vh';
+        }
+    });
+</script>
+</body>
+
+</html>
