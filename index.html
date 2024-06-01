@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <title>성남시 소개</title>
+    <title성남시 소개</title>
     <style>
         html {
             height: 100%;
@@ -53,6 +53,27 @@
             background-image: url('paper17.png');
             background-size: 100% 100%;
         }
+
+        @media only screen and (max-width: 768px) {
+    .container:nth-child(4).bigbox1 {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .container:nth-child(4) .bigbox1 img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .container:nth-child(4) .bigbox1 .text {
+        font-size: 4vw;
+    }
+}
+    
+
 
         .container:nth-child(5) {
             background-image: url('paper10.jpg');
@@ -425,6 +446,7 @@
 
 
         <!-- 4번 컨테이너 -->
+        
         <div class="container" style="margin:0; color:#4d828f">
             <div class="square1" style=" top: 50%; width:80%; height:80%;">
                 <h2 style="margin: 0px; padding: 10px; left: 50%; font-size: 4vw; top: 25%; width: 90%; height: 40%; ">
@@ -578,7 +600,7 @@
         setTimeout(() => {
             isScrolling = false;
         }, 500); // 스크롤 완료 후 0.5초 동안 추가 스크롤 방지
-    }, { passive: false });
+    }, { passive: true });
 
     let isDragging = false;
     let startY, initialY;
